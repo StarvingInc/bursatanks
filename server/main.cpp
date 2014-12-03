@@ -10,9 +10,9 @@ int main(int argc, char* argv[])
 		switch(argv[i])
 		{
 			case "-c":
-				if(i+1 <= argc) 
+				if(i+1 <= argc)
 				{
-					std::cout << "filename can't be empty" << std::endl;
+					std::cerr << "filename can't be empty" << std::endl;
 					return 0;
 				}
 				config_file = argv[i + 1];
@@ -20,13 +20,13 @@ int main(int argc, char* argv[])
 				break;
 			case "--help":
 				//todo write help
-				std::cout << "not wried yet" << std::endl;
+				std::cerr << "not wried yet" << std::endl;
 				break;
 			default:
-				std::cout << "argument " << argv[i] << " is wrong" << std::endl;
+				std::cerr << "argument " << argv[i] << " is wrong" << std::endl;
 		}
 	}
-	
+
 	Config config;
 	config.load(config_file);
 
