@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
 					std::cerr << "filename can't be empty" << std::endl;
 					return 0;
 				}
-				config_file = argv[i + 1];
+				config_file = std::string(argv[i + 1]);
 				i++;
 				break;
 			case "--help":
