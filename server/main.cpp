@@ -3,7 +3,7 @@
 
 int main(int argc, char* argv[])
 {
-	std::string config_file;
+
 
 	for(int i = 0; i < argc; ++i)
 	{
@@ -27,7 +27,6 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	Config config;
-	config.load(config_file);
+
 
 }
