@@ -1,17 +1,14 @@
 
+
 class Config
 {
-    bool file_error(int error_no = 0)
-    {
-
-    }
     public:
     bool load_file(std::fstream &config_file,std::string &config_string)
 {
             config_file.open("data.txt",std::ios::in | std::ios::out);
             if(!config_file.is_open())
             {
-                file_error(1) ///Error no. 1 - File not found or permission denied.
+                file_error_console.file_error() ///Error no. 1 - File not found or permission denied.
                 return false;
             }
             std::string flag,value,buf; ///Using to keep fragments of file.
@@ -61,13 +58,13 @@ class Config
                 }
             }else ///If function load flag that doesn't mean anything
             {
-                file_error(2) ///Warning, unknown flag.
+                file_error_console.file_error(2) ///Warning, unknown flag.
             }
         }
-        if(ex_int&&ex_string_is_set&&ex_double_is_set) return 0;
+        if(ex_int&&ex_string_is_set&&ex_double_is_set) return true;
         else
         {
-            file_error(3) ///Not all var has been loaded.
+            file_error_console.file_error(3) ///Not all var has been loaded.
             return 0;
         }
 }
