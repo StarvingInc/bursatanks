@@ -1,14 +1,21 @@
 
 class Config
 {
-    ///
+    bool file_error(int error_no = 0)
+    {
+
+    }
     public:
     bool load_file(std::fstream &config_file,std::string &config_string)
 {
-            int number_of = 0;
-            int number_start = 0;
             config_file.open("data.txt",std::ios::in | std::ios::out);
-            std::string flag,value;
+            if(!config_file.is_open())
+            {
+                file_error(1) ///Error no. 1 - File not found or permission denied.
+                return false;
+            }
+            std::string flag,value,buf; ///Using to keep fragments of file.
+            bool ex_int_is_set = false,ex_double_is_set = false,ex_string_is_set = false;
         config_file.seekg(0); ///Set fstream pointer on the start position.
         while (!config_file.eof()) ///If there is something to read, do it.
         {
@@ -17,45 +24,55 @@ class Config
             double_flag double_value
             string_flag some text ended with EOL
             long_text_flag some text ended with # dun care if there's any EOL bytes
-            list_of_values val0,val1,val2,val3... end with $
+            list_of_values val0,val1,val2,val3... end with coma ','
         */
             getline(config_file,flag,' ');
             if(flag == "ex_int")
             {
                 getline(config_file,value);
                 ex_int = atoi(value.c_str());
-                ///ex_int_is_set = true;   ///Flag with is telling us if the var was loaded. In the end of the loading it will be checked.
+                ex_int_is_set = true;   ///Flag with is telling us if the var was loaded. In the end of the loading it will be checked.
             }else
             if(flag == "ex_double")
             {
                 getline(config_file,value);
                 ex_double = atof(value.c_str());
-                ///ex_double_is_set = true;
+                ex_double_is_set = true;
             }else
             if(flag == "ex_string")
             {
                 getline(config_file,value);
                 ex_string = value;
-                ///ex_string_is_set = true;
-            }//else
-            /*if(flag == "ex_list_of_values")
+                ex_string_is_set = true;
+            }else
+            if(flag == "ex_list_of_values")
             {
-                number_start = config_file.tellg();
-                getline(config_file,value);
-                number_of = config_file.tellg();
-                config_file.seekg(number_start);
-                while(config_file.tellg() > number_of)
+                getline(config_file,buf);
+                for(int i = 0;i < buf.size();++ i)
                 {
-                    getline(config_file,value,',');
-                    ex_list_of_values.push_back(atoi(value.c_str()));
+                    if (buf[i] == ',')
+                    {
+                        ex_list_of_values.push_back(atoi(value.c_str()));
+                        value = "";
+                    }else
+                        {
+                            value +=buf[i];
+                        }
                 }
-            }*/ ///Todo make this shit working.
+            }else ///If function load flag that doesn't mean anything
+            {
+                file_error(2) ///Warning, unknown flag.
+            }
         }
-
+        if(ex_int&&ex_string_is_set&&ex_double_is_set) return 0;
+        else
+        {
+            file_error(3) ///Not all var has been loaded.
+            return 0;
+        }
 }
 
     ///Lots of GETs
         ///There should be some error catching stuff, todo.
 
 }
-
