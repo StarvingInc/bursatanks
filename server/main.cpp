@@ -3,7 +3,7 @@
 
 int main(int argc, char* argv[])
 {
-
+    std::string config_file_name;
 
 	for(int i = 0; i < argc; ++i)
 	{
@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
 				std::cerr << "filename can't be empty" << std::endl;
 				return 0;
 			}
-			config_file = std::string(argv[i + 1]);
+			config_file_name = std::string(argv[i + 1]);
 			i++;
 		}
 		else if(argv[i] == "--help")
@@ -27,6 +27,16 @@ int main(int argc, char* argv[])
 			std::cerr << "argument " << argv[i] << " is wrong" << std::endl;
 		}
 	}
+    ///Opening and loading config.
+    ///Reading opened file...
+    Config config;
+    config.load_file(config_file);
+
+    Game game;
+    while(game.is_on())
+    {
+
+    }
 
 
 

@@ -3,12 +3,12 @@
 class Config
 {
     public:
-    bool load_file(std::fstream &config_file,std::string &config_string)
+    bool load_file(std::fstream &config_file)
 {
             config_file.open("data.txt",std::ios::in | std::ios::out);
             if(!config_file.is_open())
             {
-                file_error_console.file_error() ///Error no. 1 - File not found or permission denied.
+                std::cerr<<"Error no. 1 - File not found or permission denied."
                 return false;
             }
             std::string flag,value,buf; ///Using to keep fragments of file.
@@ -22,6 +22,7 @@ class Config
             string_flag some text ended with EOL
             long_text_flag some text ended with # dun care if there's any EOL bytes
             list_of_values val0,val1,val2,val3... end with coma ','
+            Flags are always one word example i_am_flag
         */
             getline(config_file,flag,' ');
             if(flag == "ex_int")
@@ -58,18 +59,18 @@ class Config
                 }
             }else ///If function load flag that doesn't mean anything
             {
-                file_error_console.file_error(2) ///Warning, unknown flag.
+                std::cerr<<"Warning, unknown flag. I'm trying to read next...";
+                getline(config_file,buf);
             }
         }
         if(ex_int&&ex_string_is_set&&ex_double_is_set) return true;
         else
         {
-            file_error_console.file_error(3) ///Not all var has been loaded.
+            std::cerr<<"Not all var has been loaded.";
             return 0;
         }
 }
 
     ///Lots of GETs
-        ///There should be some error catching stuff, todo.
 
 }
